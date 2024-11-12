@@ -2,12 +2,87 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Altair Vega-Lite Chart</title>
+    <title>Altair Charts with Python Code</title>
+    <style>
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
-    <h1>My Vega-Lite Chart with Altair</h1>
-    <div>
-        <iframe src="chart.html" width="600" height="400" style="border:none;"></iframe>
+
+<div id="app">
+    <h1>Altair Charts with Python</h1>
+    <div class="tabs">
+        <button v-for="(tab, index) in tabs" :key="index"
+                :class="{ active: activeTab === index }"
+                @click="setActiveTab(index)">
+            {{ tab.name }}
+        </button>
     </div>
+
+    <div v-for="(tab, index) in tabs" :key="index" class="tab-content" :class="{ active: activeTab === index }">
+        <h2>{{ tab.name }}</h2>
+        <iframe v-if="tab.chartContent" :srcdoc="tab.chartContent" width="600" height="400" style="border: none;"></iframe>
+        <h3>Python Code</h3>
+        <pre v-if="tab.codeContent">{{ tab.codeContent }}</pre>
+    </div>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            activeTab: 0,
+            tabs: [
+                { name: "Bar Chart", chartPath: "charts/bar_chart.html", codePath: "code/bar_chart.py", chartContent: "", codeContent: "" },
+                { name: "Line Chart", chartPath: "charts/line_chart.html", codePath: "code/line_chart.py", chartContent: "", codeContent: "" },
+                { name: "Scatter Plot", chartPath: "charts/scatter_plot.html", codePath: "code/scatter_plot.py", chartContent: "", codeContent: "" }
+            ]
+        },
+        created() {
+            // Load initial content for all tabs
+            this.tabs.forEach((tab, index) => {
+                this.loadTabContent(index);
+            });
+        },
+        methods: {
+            setActiveTab(index) {
+                this.activeTab = index;
+            },
+            loadTabContent(index) {
+                // Load chart HTML content
+                fetch(this.tabs[index].chartPath)
+                    .then(response => response.text())
+                    .then(data => {
+                        this.tabs[index].chartContent = data;
+                    });
+
+                // Load Python code content
+                fetch(this.tabs[index].codePath)
+                    .then(response => response.text())
+                    .then(data => {
+                        this.tabs[index].codeContent = data;
+                    });
+            }
+        }
+    });
+</script>
+
 </body>
 </html>
