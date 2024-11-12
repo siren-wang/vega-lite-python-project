@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 300
+    }
+  },
+  "data": {
+    "name": "data-da9a454df0df8e8c843a0e21b04bad6c"
+  },
+  "datasets": {
+    "data-da9a454df0df8e8c843a0e21b04bad6c": [
+      {
+        "category": "A",
+        "month": "Jan",
+        "sales": 3,
+        "value": 10
+      },
+      {
+        "category": "B",
+        "month": "Feb",
+        "sales": 7,
+        "value": 15
+      },
+      {
+        "category": "C",
+        "month": "Mar",
+        "sales": 5,
+        "value": 8
+      },
+      {
+        "category": "D",
+        "month": "Apr",
+        "sales": 10,
+        "value": 20
+      },
+      {
+        "category": "E",
+        "month": "May",
+        "sales": 8,
+        "value": 25
+      }
+    ]
+  },
+  "encoding": {
+    "color": {
+      "field": "Measure",
+      "type": "nominal"
+    },
+    "x": {
+      "field": "category",
+      "type": "nominal"
+    },
+    "y": {
+      "field": "Value",
+      "type": "quantitative"
+    }
+  },
+  "height": 260,
+  "mark": {
+    "type": "bar"
+  },
+  "title": "Grouped Bar Chart",
+  "transform": [
+    {
+      "as": [
+        "Measure",
+        "Value"
+      ],
+      "fold": [
+        "value",
+        "sales"
+      ]
+    }
+  ],
+  "width": "container"
+}

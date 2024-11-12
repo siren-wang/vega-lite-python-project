@@ -1,0 +1,5 @@
+# Python virtual environment
+vega-lite-env/
+# Configuration files
+pyenv.cfg
+

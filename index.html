@@ -2,87 +2,269 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Altair Charts with Python Code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altair Chart Showcase</title>
+
+    <!-- Styles -->
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            background: #fff;
+        }
+        .left-pane {
+            width: 50%;
+            border-right: 1px solid #ddd;
+        }
+
+        .right-pane {
+            width: 50%;
+            padding: 0 20px;
+            background-color: #fff;
+            color: #333;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: calc(100vh - 77px);
+        }
+
+        .code-content {
+            flex: 0 0 auto; /* This keeps the Python code content at its natural size */
+{#            margin-bottom: 10px;#}
+            max-height: 30%; /* Optionally, limit the Python code to a certain portion of the right pane */
+            overflow: auto; /* Allow scrolling if Python code is too long */
+        }
+
+        .json-content {
+            flex: 1 1 auto; /* This makes the JSON code take the remaining space of the right-pane */
+            overflow: auto; /* Allow scrolling if JSON code is too long */
+        }
+        /* Tab Navigation */
         .tabs {
             display: flex;
             justify-content: space-around;
-            margin-top: 20px;
+            border-bottom: 2px solid #ddd;
         }
+        .tabs button {
+            flex-grow: 1;
+            padding: 15px;
+            cursor: pointer;
+            background: #f1f1f1;
+            border: none;
+            outline: none;
+            transition: background 0.3s;
+            font-size: 16px;
+        }
+        .tabs button.active {
+            background: #da5961;
+            color: #fff;
+            font-weight: bold;
+        }
+        .tabs button:hover {
+            background: #ddd;
+        }
+        /* Tab Content */
         .tab-content {
             display: none;
+            padding: 10px;
+            height: 800px;
+            overflow: scroll;
         }
         .tab-content.active {
             display: block;
         }
-        pre {
-            background-color: #f4f4f4;
+        /* Chart Boxes */
+        .chart-box {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             padding: 10px;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+            position: relative;
+        }
+        .chart-box:hover {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .chart-box iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 5px;
+            pointer-events: auto;
+        }
+        pre {
+            background-color: #fff;
+            color: #333;
+            padding: 15px;
             border-radius: 5px;
             white-space: pre-wrap;
+            overflow: auto;
+            max-height: 600px;
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid #ddd;
         }
     </style>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
+
 <body>
+    <h1>Altair Chart Showcase</h1>
 
-<div id="app">
-    <h1>Altair Charts with Python</h1>
-    <div class="tabs">
-        <button v-for="(tab, index) in tabs" :key="index"
-                :class="{ active: activeTab === index }"
-                @click="setActiveTab(index)">
-            {{ tab.name }}
-        </button>
+    <div class="container" id="app">
+        <div class="left-pane">
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button v-for="(tab, index) in tabs" :key="index"
+                        :class="{ active: activeTab === index }"
+                        @click="setActiveTab(index)">
+                    {{ tab.name }}
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div v-for="(tab, index) in tabs" :key="index" class="tab-content" :class="{ active: activeTab === index }">
+                <div class="chart-box" v-for="chart in tab.charts" @click="setActiveChart(chart)">
+                    <iframe :srcdoc="chart.chartContent" style="height: 330px; border: none;" @load="captureIframeClick(chart)"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="right-pane">
+            <h2>Python Code</h2>
+            <pre v-if="activeChart && activeChart.codeContent" class="code-content">{{ activeChart.codeContent }}</pre>
+
+            <h2>Vega-Lite JSON Code</h2>
+            <pre v-if="activeChart && activeChart.jsonContent" class="json-content">{{ activeChart.jsonContent }}</pre>
+        </div>
     </div>
 
-    <div v-for="(tab, index) in tabs" :key="index" class="tab-content" :class="{ active: activeTab === index }">
-        <h2>{{ tab.name }}</h2>
-        <iframe v-if="tab.chartContent" :srcdoc="tab.chartContent" width="600" height="400" style="border: none;"></iframe>
-        <h3>Python Code</h3>
-        <pre v-if="tab.codeContent">{{ tab.codeContent }}</pre>
-    </div>
-</div>
-
-<script>
-    new Vue({
-        el: '#app',
-        data: {
-            activeTab: 0,
-            tabs: [
-                { name: "Bar Chart", chartPath: "charts/bar_chart.html", codePath: "code/bar_chart.py", chartContent: "", codeContent: "" },
-                { name: "Line Chart", chartPath: "charts/line_chart.html", codePath: "code/line_chart.py", chartContent: "", codeContent: "" },
-                { name: "Scatter Plot", chartPath: "charts/scatter_plot.html", codePath: "code/scatter_plot.py", chartContent: "", codeContent: "" }
-            ]
-        },
-        created() {
-            // Load initial content for all tabs
-            this.tabs.forEach((tab, index) => {
-                this.loadTabContent(index);
-            });
-        },
-        methods: {
-            setActiveTab(index) {
-                this.activeTab = index;
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                activeTab: 0,
+                activeChart: null,
+                tabs: [
+                {
+                    name: "Bar Charts",
+                    charts: [1, 2, 3, 4].map(num => ({
+                        chartPath: `charts/bar_chart_${num}.html`,
+                        codePath: `altair/bar_chart_${num}.py`,
+                        jsonPath: `vega/bar_chart_${num}.json`,
+                        chartContent: "",
+                        codeContent: "",
+                        jsonContent: ""
+                    }))
+                },
+                {
+                    name: "Line Charts",
+                    charts: [1, 2, 3, 4].map(num => ({
+                        chartPath: `charts/line_chart_${num}.html`,
+                        codePath: `altair/line_chart_${num}.py`,
+                        jsonPath: `vega/line_chart_${num}.json`,
+                        chartContent: "",
+                        codeContent: "",
+                        jsonContent: ""
+                    }))
+                },
+                {
+                    name: "Circular Plots",
+                    charts: [1, 2, 3, 4].map(num => ({
+                        chartPath: `charts/circular_plot_${num}.html`,
+                        codePath: `altair/circular_plot_${num}.py`,
+                        jsonPath: `vega/circular_plot_${num}.json`,
+                        chartContent: "",
+                        codeContent: "",
+                        jsonContent: ""
+                    }))
+                },
+                {
+                    name: "Scatter Plots",
+                    charts: [1, 2, 3, 4].map(num => ({
+                        chartPath: `charts/scatter_plot_${num}.html`,
+                        codePath: `altair/scatter_plot_${num}.py`,
+                        jsonPath: `vega/scatter_plot_${num}.json`,
+                        chartContent: "",
+                        codeContent: "",
+                        jsonContent: ""
+                    }))
+                },
+                {
+                    name: "Concatenations",
+                    charts: [1, 2, 3, 4].map(num => ({
+                        chartPath: `charts/concatenation_${num}.html`,
+                        codePath: `altair/concatenation_${num}.py`,
+                        jsonPath: `vega/concatenation_${num}.json`,
+                        chartContent: "",
+                        codeContent: "",
+                        jsonContent: ""
+                    }))
+                }
+            ],
             },
-            loadTabContent(index) {
-                // Load chart HTML content
-                fetch(this.tabs[index].chartPath)
-                    .then(response => response.text())
-                    .then(data => {
-                        this.tabs[index].chartContent = data;
+            created() {
+                this.tabs.forEach(tab => {
+                    tab.charts.forEach(chart => {
+                        this.loadChartContent(chart);
                     });
+                });
+                // Set the default active chart to the first chart of the first tab
+                this.activeChart = this.tabs[0].charts[0];
+            },
+            methods: {
+                setActiveTab(index) {
+                    this.activeTab = index;
+                    this.activeChart = this.tabs[index].charts[0];
+                },
+                loadChartContent(chart) {
+                    // Load chart HTML content
+                    fetch(chart.chartPath)
+                        .then(response => response.text())
+                        .then(data => {
+                            chart.chartContent = data;
+                        });
 
-                // Load Python code content
-                fetch(this.tabs[index].codePath)
-                    .then(response => response.text())
-                    .then(data => {
-                        this.tabs[index].codeContent = data;
+                    // Load Python code content
+                    fetch(chart.codePath)
+                        .then(response => response.text())
+                        .then(data => {
+                            chart.codeContent = data;
+                        });
+
+                    // Load Vega-Lite JSON content
+                    fetch(chart.jsonPath)
+                        .then(response => response.text())
+                        .then(data => {
+                            chart.jsonContent = data;
+                        });
+                },
+                setActiveChart(chart) {
+                    this.activeChart = chart;
+                },
+                captureIframeClick(chart) {
+                    const iframe = event.target;
+                    iframe.contentWindow.document.addEventListener('click', () => {
+                        this.setActiveChart(chart);
                     });
+                }
+                
             }
-        }
-    });
-</script>
-
+        })
+    </script>
 </body>
 </html>

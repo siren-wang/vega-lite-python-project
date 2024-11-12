@@ -20,7 +20,7 @@
   <div id="vis"></div>
   <script>
     (function(vegaEmbed) {
-      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-885a5349467862f8c3116ae8182b7c65"}, "mark": {"type": "bar"}, "encoding": {"x": {"field": "category", "type": "nominal"}, "y": {"field": "value", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-885a5349467862f8c3116ae8182b7c65": [{"category": "A", "value": 28}, {"category": "B", "value": 55}, {"category": "C", "value": 43}, {"category": "D", "value": 91}, {"category": "E", "value": 81}, {"category": "F", "value": 53}, {"category": "G", "value": 19}, {"category": "H", "value": 87}]}};
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-da9a454df0df8e8c843a0e21b04bad6c"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "Measure", "type": "nominal"}, "x": {"field": "category", "type": "nominal"}, "y": {"field": "Value", "type": "quantitative"}}, "height": 260, "title": "Grouped Bar Chart", "transform": [{"fold": ["value", "sales"], "as": ["Measure", "Value"]}], "width": "container", "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-da9a454df0df8e8c843a0e21b04bad6c": [{"category": "A", "value": 10, "month": "Jan", "sales": 3}, {"category": "B", "value": 15, "month": "Feb", "sales": 7}, {"category": "C", "value": 8, "month": "Mar", "sales": 5}, {"category": "D", "value": 20, "month": "Apr", "sales": 10}, {"category": "E", "value": 25, "month": "May", "sales": 8}]}};
       var embedOpt = {"mode": "vega-lite"};
 
       function showError(el, error){
