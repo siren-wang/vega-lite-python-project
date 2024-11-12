@@ -3,10 +3,10 @@ import pandas as pd
 
 # Sample data
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25],
-    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    'sales': [3, 7, 5, 10, 8]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
+    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 # Function to save chart and code files
@@ -26,7 +26,7 @@ def save_chart_and_code(chart, chart_name, code):
 ### 1. Bar Charts
 
 # Bar Chart 1: Simple vertical bar chart
-bar_chart_1 = alt.Chart(data).mark_bar().encode(
+bar_chart_1 = alt.Chart(data).mark_bar(size=15).encode(
     x='category:N',
     y='value:Q',
 ).properties(
@@ -39,11 +39,11 @@ bar_chart_1_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
-bar_chart = alt.Chart(data).mark_bar().encode(
+bar_chart = alt.Chart(data).mark_bar(size=20).encode(
     x='category:N',
     y='value:Q',
 ).properties(
@@ -56,7 +56,7 @@ bar_chart = alt.Chart(data).mark_bar().encode(
 save_chart_and_code(bar_chart_1, "bar_chart_1", bar_chart_1_code)
 
 # Bar Chart 2: Horizontal bar chart with color
-bar_chart_2 = alt.Chart(data).mark_bar().encode(
+bar_chart_2 = alt.Chart(data).mark_bar(size=20).encode(
     y='category:N',
     x='value:Q',
     color='category:N'
@@ -70,11 +70,11 @@ bar_chart_2_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
-bar_chart = alt.Chart(data).mark_bar().encode(
+bar_chart = alt.Chart(data).mark_bar(size=20).encode(
     y='category:N',
     x='value:Q',
     color='category:N'
@@ -91,7 +91,7 @@ save_chart_and_code(bar_chart_2, "bar_chart_2", bar_chart_2_code)
 bar_chart_3 = alt.Chart(data).transform_fold(
     ['value', 'sales'],
     as_=['Measure', 'Value']
-).mark_bar().encode(
+).mark_bar(size=20).encode(
     x='category:N',
     y='Value:Q',
     color='Measure:N'
@@ -105,15 +105,15 @@ bar_chart_3_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25],
-    'sales': [3, 7, 5, 10, 8]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],,
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 bar_chart = alt.Chart(data).transform_fold(
     ['value', 'sales'],
     as_=['Measure', 'Value']
-).mark_bar().encode(
+).mark_bar(size=20).encode(
     x='category:N',
     y='Value:Q',
     color='Measure:N'
@@ -127,7 +127,7 @@ bar_chart = alt.Chart(data).transform_fold(
 save_chart_and_code(bar_chart_3, "bar_chart_3", bar_chart_3_code)
 
 # Bar Chart 4: Stacked bar chart
-bar_chart_4 = alt.Chart(data).mark_bar().encode(
+bar_chart_4 = alt.Chart(data).mark_bar(size=20).encode(
     x='category:N',
     y='value:Q',
     color='category:N'
@@ -141,11 +141,11 @@ bar_chart_4_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
-bar_chart = alt.Chart(data).mark_bar().encode(
+bar_chart = alt.Chart(data).mark_bar(size=20).encode(
     x='category:N',
     y='value:Q',
     color='category:N'
@@ -174,8 +174,8 @@ line_chart_1_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    'sales': [3, 7, 5, 10, 8]
+    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 line_chart = alt.Chart(data).mark_line().encode(
@@ -205,8 +205,8 @@ line_chart_2_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    'sales': [3, 7, 5, 10, 8]
+    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 line_chart = alt.Chart(data).mark_line(point=True).encode(
@@ -240,9 +240,9 @@ line_chart_3_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    'value': [10, 15, 8, 20, 25],
-    'sales': [3, 7, 5, 10, 8]
+    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],,
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 line_chart = alt.Chart(data).transform_fold(
@@ -275,8 +275,8 @@ line_chart_4_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    'sales': [3, 7, 5, 10, 8]
+    'month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 line_chart = alt.Chart(data).mark_line(interpolate='step-after').encode(
@@ -307,8 +307,8 @@ circular_plot_1_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
 circular_plot = alt.Chart(data).mark_arc().encode(
@@ -337,8 +337,8 @@ circular_plot_2_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
 circular_plot = alt.Chart(data).mark_arc().encode(
@@ -367,8 +367,8 @@ circular_plot_3_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
 circular_plot = alt.Chart(data).mark_arc(innerRadius=50).encode(
@@ -397,8 +397,8 @@ circular_plot_4_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
 circular_plot = alt.Chart(data).mark_arc(innerRadius=100, outerRadius=200).encode(
@@ -430,9 +430,9 @@ scatter_plot_1_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25],
-    'sales': [3, 7, 5, 10, 8]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],,
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 scatter_plot = alt.Chart(data).mark_circle(size=100).encode(
@@ -463,9 +463,9 @@ scatter_plot_2_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25],
-    'sales': [3, 7, 5, 10, 8]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],,
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 scatter_plot = alt.Chart(data).mark_circle(size=100, opacity=0.5).encode(
@@ -498,9 +498,9 @@ scatter_plot_3_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25],
-    'sales': [3, 7, 5, 10, 8]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],,
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 scatter_plot = alt.Chart(data).mark_circle(size=100).encode(
@@ -534,9 +534,9 @@ scatter_plot_4_code = '''import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25],
-    'sales': [3, 7, 5, 10, 8]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],,
+    'sales': [3, 7, 5, 10, 8, 7, 11, 9, 10]
 })
 
 scatter_plot = alt.Chart(data).mark_circle().encode(

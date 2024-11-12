@@ -7,10 +7,10 @@
     }
   },
   "data": {
-    "name": "data-da9a454df0df8e8c843a0e21b04bad6c"
+    "name": "data-7236977939362759d3deb27d6bb3940b"
   },
   "datasets": {
-    "data-da9a454df0df8e8c843a0e21b04bad6c": [
+    "data-7236977939362759d3deb27d6bb3940b": [
       {
         "category": "A",
         "month": "Jan",
@@ -40,6 +40,30 @@
         "month": "May",
         "sales": 8,
         "value": 25
+      },
+      {
+        "category": "F",
+        "month": "Jun",
+        "sales": 7,
+        "value": 12
+      },
+      {
+        "category": "G",
+        "month": "Jul",
+        "sales": 11,
+        "value": 19
+      },
+      {
+        "category": "H",
+        "month": "Aug",
+        "sales": 9,
+        "value": 21
+      },
+      {
+        "category": "I",
+        "month": "Sep",
+        "sales": 10,
+        "value": 23
       }
     ]
   },
@@ -59,6 +83,7 @@
   },
   "height": 260,
   "mark": {
+    "size": 20,
     "type": "bar"
   },
   "title": "Grouped Bar Chart",

@@ -2,8 +2,8 @@ import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
-    'category': ['A', 'B', 'C', 'D', 'E'],
-    'value': [10, 15, 8, 20, 25]
+    'category': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+    'value': [10, 15, 8, 20, 25, 12, 19, 21, 23],
 })
 
 circular_plot = alt.Chart(data).mark_arc(innerRadius=50).encode(
